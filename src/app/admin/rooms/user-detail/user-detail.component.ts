@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/model/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-detail',
@@ -11,9 +12,12 @@ export class UserDetailComponent implements OnInit {
   @Input()
   user: User;
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  editUser() {
+    this.router.navigate(['admin', 'users'], { queryParams : { id : this.user.id , action : 'edit' } });
+  }
 }
