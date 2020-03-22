@@ -18,14 +18,21 @@ export class UserEditComponent implements OnInit {
   message: string;
 
   password: string;
+  password2: string;
+
+  nameIsValid = false;
+  passwordsAreValid = false;
+  passwordsMatch = false;
 
   constructor(private dataService: DataService,
               private router: Router) { }
 
   ngOnInit(): void {
     // this is a copy not a reference. Rather than having a reference to the object,
-    // we'll be copying all of th data from an object to another
+    // we'll be copying all of the data from an object to another
     this.formUser = Object.assign({}, this.user);
+    this.checkIfNameIsValid();
+    this.checkIfPasswordsAreValid();
   }
 
   onSubmit() {
@@ -45,4 +52,28 @@ export class UserEditComponent implements OnInit {
       );
     }
   }
+
+  checkIfNameIsValid() {
+    if (this.formUser.name) {
+      this.nameIsValid = this.formUser.name.trim().length > 0;
+    } else {
+      this.nameIsValid = false;
+    }
+  }
+
+   checkIfPasswordsAreValid() {
+    if (this.formUser.id != null) {
+      this.passwordsAreValid = true;
+      this.passwordsMatch = true;
+    } else {
+      this.passwordsMatch = this.password === this.password2;
+      if (this.password) {
+        this.passwordsAreValid = this.password.trim().length > 0;
+        console.log('bla ' + this.password + ' . ' + this.passwordsAreValid);
+      } else {
+        this.passwordsAreValid = false;
+      }
+    }
+   }
+
 }
